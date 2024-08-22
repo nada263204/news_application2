@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:news_application/category/category_item.dart';
-import 'package:news_application/category/category_model.dart';
+import 'package:news_application/sources/view/widgets/category_item.dart';
+import 'package:news_application/sources/view/widgets/category_model.dart';
 
 class CategoryScreen extends StatelessWidget {
-   CategoryScreen({
+  CategoryScreen({
     Key? key,
     required this.onCategorySelected,
   }) : super(key: key);
@@ -21,8 +21,10 @@ class CategoryScreen extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 24),
-            child: Text('Pick your category of interest',
-            style: Theme.of(context).textTheme.bodySmall,),
+            child: Text(
+              'Pick your category of interest',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ),
           Expanded(
             child: GridView.builder(
@@ -32,13 +34,15 @@ class CategoryScreen extends StatelessWidget {
                 crossAxisSpacing: 24,
               ),
               itemCount: categoryModel.Categories.length,
-              itemBuilder: ( context,  index) {
-                return  InkWell(
-                  onTap: (){
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
                     onCategorySelected(categoryModel.Categories[index]);
                   },
                   child: category_item(
-                    category:categoryModel.Categories[index], index: index,),
+                    category: categoryModel.Categories[index],
+                    index: index,
+                  ),
                 );
               },
             ),
@@ -48,4 +52,3 @@ class CategoryScreen extends StatelessWidget {
     );
   }
 }
-
