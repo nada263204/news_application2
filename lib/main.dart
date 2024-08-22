@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:news_application/API/api_service.dart';
-import 'package:news_application/app_theme.dart';
-import 'package:news_application/home_screen.dart';
+import 'package:news_application/shared/app_theme.dart';
+import 'package:news_application/home/home_screen.dart';
 
 void main() {
-  try {
-    APIServices.getSources("sports");
-  } catch (e) {
-    print(e);
-  }
+  // try {
+  //   SourcesAPIDataSource.getSources("sports");
+  // } catch (e) {
+  //   print(e);
+  // }
   runApp(const MyApp());
 }
 
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        HomeScreen.routeName :(context) => HomeScreen(),
+        HomeScreen.routeName: (context) => HomeScreen(),
       },
       initialRoute: HomeScreen.routeName,
       theme: appTheme.lightTheme,
@@ -29,4 +28,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

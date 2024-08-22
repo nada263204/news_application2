@@ -66,7 +66,7 @@
 //     return data;
 //   }
 // }
-import 'package:news_application/sources/models/sourceModel.dart';
+import 'package:news_application/sources/data/models/sourceModel.dart';
 
 class NewsResponse {
   final String? status;
