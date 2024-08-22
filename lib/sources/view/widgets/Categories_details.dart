@@ -23,17 +23,32 @@ class _CategoriesDetailsState extends State<CategoriesDetails> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (_) => viewModel..getSources(widget.categoryId),
-        child: Builder(builder: (_) {
-          if (viewModel.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (viewModel.errorMessage != null) {
-            return const Icon(Icons.error_outline_outlined);
-          } else {
-            final sources = viewModel.sources;
-            return Tabs(sources);
-          }
-        }));
+      create: (_) => viewModel,
+      child: Consumer<SourcesViewModel>(builder: (_, viewModel, __) {
+        if (viewModel.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (viewModel.errorMessage != null) {
+          return const Icon(Icons.error_outline_outlined);
+        } else {
+          final sources = viewModel.sources;
+          return Tabs(sources);
+        }
+      }),
+    );
+
+    //  ChangeNotifierProvider(
+    //     create: (_) => viewModel..getSources(widget.categoryId),
+    //     child:
+    //      Builder(builder: (_) {
+    //       if (viewModel.isLoading) {
+    //         return const Center(child: CircularProgressIndicator());
+    //       } else if (viewModel.errorMessage != null) {
+    //         return const Icon(Icons.error_outline_outlined);
+    //       } else {
+    //         final sources = viewModel.sources;
+    //         return Tabs(sources);
+    //       }
+    //     }));
     //  FutureBuilder(
     //     future: APIServices.getSources(categoryId),
     //     builder: (context, snapshot) {

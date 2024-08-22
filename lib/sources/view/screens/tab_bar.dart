@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
-import 'package:news_application/News/news_list.dart';
-import 'package:news_application/sources/models/sourceModel.dart';
+import 'package:news_application/News/view/news_list.dart';
+import 'package:news_application/sources/data/models/sourceModel.dart';
 
 import 'package:news_application/sources/view/widgets/tab_item.dart';
 
