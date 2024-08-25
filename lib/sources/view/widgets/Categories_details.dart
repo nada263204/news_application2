@@ -1,8 +1,9 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_application/sources/view/screens/tab_bar.dart';
+import 'package:news_application/sources/view_model/sources_states.dart';
 import 'package:news_application/sources/view_model/sources_view_model.dart';
-import 'package:provider/provider.dart';
 
 class CategoriesDetails extends StatefulWidget {
   final String categoryId;
@@ -22,45 +23,20 @@ class _CategoriesDetailsState extends State<CategoriesDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => viewModel,
-      child: Consumer<SourcesViewModel>(builder: (_, viewModel, __) {
-        if (viewModel.isLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (viewModel.errorMessage != null) {
-          return const Icon(Icons.error_outline_outlined);
-        } else {
-          final sources = viewModel.sources;
-          return Tabs(sources);
-        }
-      }),
-    );
-
-    //  ChangeNotifierProvider(
-    //     create: (_) => viewModel..getSources(widget.categoryId),
-    //     child:
-    //      Builder(builder: (_) {
-    //       if (viewModel.isLoading) {
-    //         return const Center(child: CircularProgressIndicator());
-    //       } else if (viewModel.errorMessage != null) {
-    //         return const Icon(Icons.error_outline_outlined);
-    //       } else {
-    //         final sources = viewModel.sources;
-    //         return Tabs(sources);
-    //       }
-    //     }));
-    //  FutureBuilder(
-    //     future: APIServices.getSources(categoryId),
-    //     builder: (context, snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.waiting) {
-    //         return const Center(child: CircularProgressIndicator());
-    //       } else if (snapshot.hasError) {
-    //         return const Center(child: Text('Error'));
-    //       } else if (snapshot.data?.status != 'ok') {
-    //         return const Center(child: Text('Something went wrong'));
-    //       }
-    //       final sources = snapshot.data?.sources ?? [];
-    //       return Tabs(sources);
-    //     });
+    return BlocProvider(
+        create: (_) => SourcesViewModel()..getSources(widget.categoryId),
+        child: BlocBuilder<SourcesViewModel, SourcesStates>(
+            builder: (context, state) {
+          if (state is SourcesLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is SourcesError) {
+            return const Icon(Icons.error_outline_outlined);
+          } else if (state is SourcesSuccess) {
+            final sources = state.sources;
+            return Tabs(sources);
+          } else {
+            return const SizedBox();
+          }
+        }));
   }
 }
